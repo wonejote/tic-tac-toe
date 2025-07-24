@@ -1,0 +1,12 @@
+.tablero{
+    display: grid;
+    width: 600px;
+    height: 600px;
+    grid-template-columns: repeat(3,1fr);
+    background-color: green;
+}
+
+.casilla{
+    border: 1px black solid;
+    background-color: aliceblue;
+}
