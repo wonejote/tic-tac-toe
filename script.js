@@ -1,6 +1,6 @@
 let turno = 1;
 let jugador = "jugador1"
-/* const casillas = document.querySelectorAll(".casilla"); 
+const casillas = document.querySelectorAll(".casilla"); 
 
 
 casillas.forEach(function(casilla) {
@@ -8,15 +8,19 @@ casillas.forEach(function(casilla) {
 
     if (turno%2 == 1)
     {   casilla.style.backgroundColor = "red";
-        turno++
+        const pos = this.dataset.p.split(',').map(Number);
+        juego.agregar(pos, 1);
+        turno++;
     }
     else
     {
         casilla.style.backgroundColor = "blue";
-        turno++
+        const pos = this.dataset.p.split(',').map(Number);
+        juego.agregar(pos, 1);
+        turno++;
     }
   });
-});*/
+});
 
 
 
@@ -25,7 +29,7 @@ function crearJuego(nombre)
 {
 this.nombre = nombre;
 let board = [
-[0,"hay","hay"],
+[0,0,0],
 [0,0,0],
 [0,0,0]
 ];
@@ -34,7 +38,7 @@ this.mostrarBoard = function mostrarBoard(){
     console.log(board);
 }
 
- this.checkRows = function checkGanador(num)
+ this.checkRows = function checkRows(num)
 {
     for (let i = 0; i <= 2; i++)
     {   let cumple = true;
@@ -57,7 +61,7 @@ this.saludo = function(){console.log(`el nombre del tablero es ${nombre}`);};
 
 
 
- this.checkColumns = function checkGanador(num)
+ this.checkColumns = function checkColumns(num)
 {
     for (let j = 0; j <= 2; j++)
     {   let cumple = true;
@@ -76,7 +80,7 @@ this.saludo = function(){console.log(`el nombre del tablero es ${nombre}`);};
 
 }
 
-this.checkDiagonal = function checkGanador(num){
+this.checkDiagonal = function checkDiagonal(num){
 
     if ((board[0][0] == num && board[1][1] == num && board[2][2] == num) 
         || (board[0][2] == num && board[1][1] == num  && board[2][0] == num))
@@ -87,6 +91,12 @@ this.checkDiagonal = function checkGanador(num){
     this.agregar = function agregar(p,jugador)
     {
         board[p[0]][p[1]] = jugador;
+    }
+
+    this.checkWin = function checkWin(num){
+        checkColumns(num);
+        checkDiagonal(num);
+        checkRows(num)
     }
 }
 ////////////////////////////////////////////////////////////////////////
@@ -100,30 +110,7 @@ let juego = new crearJuego("tablerazo");
 
 
 
-juego.checkRows("hay");
 
-
-
-juego.checkColumns("hay");
-
-juego.checkDiagonal("hay")
-
-juego.mostrarBoard();
-let p1 = [0,0];
-let p2 = [1,1];
-let p3 = [2,2];
-juego.agregar(p1,"hay");
-juego.agregar(p2,"hay");
-juego.agregar(p3,"hay");
-
-juego.mostrarBoard();
-juego.checkRows("hay");
-
-
-
-juego.checkColumns("hay");
-
-juego.checkDiagonal("hay")
 
 
 
@@ -140,6 +127,16 @@ function crearJugador(jugador)
 
 }
 
+
+juego.checkRows("hay");
+
+
+
+juego.checkColumns("hay");
+
+juego.checkDiagonal("hay")
+
+juego.mostrarBoard();
 const j1 = crearJugador("pepe");
 const j2 = crearJugador("pedro");
 
