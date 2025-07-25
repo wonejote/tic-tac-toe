@@ -1,26 +1,52 @@
 let turno = 1;
-let jugador = "jugador1"
+let game = true;
+
 const casillas = document.querySelectorAll(".casilla"); 
+const jugador1 = document.querySelector("#j1");
+const jugador2 = document.querySelector("#j2");
+const btnReiniciar = document.querySelector("#btnR");
+const btnAceptar = document.querySelector("#btnA");
+const anuncio = document.querySelector(".ganadorAnuncio");
+
+jugador1.value = "Jugador 1";
+jugador2.value = "Jugador 2";
+
+btnReiniciar.addEventListener("click", function(){
+    juego.reiniciar();
+})
+
+btnAceptar.addEventListener("click", function(){
+    if (anuncio.innerText == "")
+        {game = true;}
+    else{juego.reiniciar();}
+})
+
+
+
 
 
 casillas.forEach(function(casilla) {
   casilla.addEventListener("click", function() {
 
-    if (turno%2 == 1 && casilla.innerText == "")
+    if (turno%2 == 1 && casilla.innerText == "" && game)
     {   casilla.innerText = "X";
         const pos = this.dataset.p.split(',').map(Number);
         juego.agregar(pos, "X");
-        juego.checkWin("X");
+        
         turno++;
+        
     }
-    else if (casilla.innerText == "")
+    else if (casilla.innerText == "" && game)
     {   
         casilla.innerText = "O";
         const pos = this.dataset.p.split(',').map(Number);
         juego.agregar(pos, "O");
-        juego.checkWin("O");
+        
         turno++;
+        
     }
+    juego.checkWin("X");
+    juego.checkWin("O");
     
   });
 });
@@ -52,13 +78,13 @@ this.mostrarBoard = function mostrarBoard(){
             
         }
 
-         if (cumple){ console.log(`la fila ${i + 1} cumple`); alert(`ganan las ${num}`)}
+         if (cumple){ return true;}
         
         
     }
 
 }
-this.saludo = function(){console.log(`el nombre del tablero es ${nombre}`);};
+
 
 
 
@@ -75,7 +101,7 @@ this.saludo = function(){console.log(`el nombre del tablero es ${nombre}`);};
             
         }
 
-         if (cumple){ console.log(`la columna ${j + 1} cumple`);alert(`ganan las ${num}`)}
+         if (cumple){ return true;}
         
         
     }
@@ -88,8 +114,8 @@ this.checkDiagonal = function checkDiagonal(num){
     if ((board[0][0] == num && board[1][1] == num && board[2][2] == num) 
         || (board[0][2] == num && board[1][1] == num  && board[2][0] == num))
     {
-        console.log("hay ganador");
-        alert(`ganan las ${num}`);
+        return true;
+        
     }
 }
     this.agregar = function agregar(p,jugador)
@@ -101,16 +127,31 @@ this.checkDiagonal = function checkDiagonal(num){
        
         this.checkDiagonal(num);
         this.checkRows(num);
-         this.checkColumns(num);
+        this.checkColumns(num);
+
+        if (this.checkDiagonal(num) || this.checkRows(num) || this.checkColumns(num))
+            { turno%2 == 0 ?  anuncio.innerText = `Gana ${jugador1.value}` : anuncio.innerText = `Gana ${jugador2.value}`;
+         game = false;}
     }
+
+
+    this.reiniciar = function reiniciar(){
+        casillas.forEach(function(casilla){
+        casilla.innerText = ""; 
+        turno = 1;
+        game = true;   
+        anuncio.innerText = "";
+        board = [
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+            ];
+        })
+        }
+
+
 }
 ////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 let juego = new crearJuego("tablerazo");
 
 
@@ -118,32 +159,6 @@ let juego = new crearJuego("tablerazo");
 
 
 
-
-function crearJugador(jugador)
-{
-
-    return{
-        jugador,
-        ganador(){
-            console.log(`gana el jugador ${jugador}`);   
-        },
-        saludar(){console.log(`hola, soy  ${jugador}`); }
-    };
-
-}
-
-
-juego.checkRows("hay");
-
-
-
-juego.checkColumns("hay");
-
-juego.checkDiagonal("hay")
-
-juego.mostrarBoard();
-const j1 = crearJugador("pepe");
-const j2 = crearJugador("pedro");
 
 
 

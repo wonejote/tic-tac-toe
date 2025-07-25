@@ -1,3 +1,13 @@
+.fondo{
+    background-color: grey;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 50px;
+    width: calc(1050px);
+    
+}
+
 .tablero{
     display: grid;
     width: 600px;
@@ -6,15 +16,49 @@
     background-color: green;
 }
 
+
+
+.sidebar{
+    background-color: bisque;
+    height: 600px;
+    width: 400px;
+    padding: 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+ 
+    align-items: center;
+}
+
 .casilla{
     border: 1px black solid;
     background-color: aliceblue;
     font-size: 32px;
-    font-weight: bolder;
+    font-weight: bolder; 
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 200px;
     width: 200px;
+}
+input{
+    display: block;
+    margin: 25px;
+    height: 3em;
+    font-size: larger;
+    width: 250px;
+    padding-left: 10px;
+    box-sizing: borde
+    
+  
+}
+button{
+    height: 3em;
+    width: 250px;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+#btnA{
+    margin-top: 11px;
 }
