@@ -6,19 +6,22 @@ const casillas = document.querySelectorAll(".casilla");
 casillas.forEach(function(casilla) {
   casilla.addEventListener("click", function() {
 
-    if (turno%2 == 1)
-    {   casilla.style.backgroundColor = "red";
+    if (turno%2 == 1 && casilla.innerText == "")
+    {   casilla.innerText = "X";
         const pos = this.dataset.p.split(',').map(Number);
-        juego.agregar(pos, 1);
+        juego.agregar(pos, "X");
+        juego.checkWin("X");
         turno++;
     }
-    else
-    {
-        casilla.style.backgroundColor = "blue";
+    else if (casilla.innerText == "")
+    {   
+        casilla.innerText = "O";
         const pos = this.dataset.p.split(',').map(Number);
-        juego.agregar(pos, 1);
+        juego.agregar(pos, "O");
+        juego.checkWin("O");
         turno++;
     }
+    
   });
 });
 
@@ -49,7 +52,7 @@ this.mostrarBoard = function mostrarBoard(){
             
         }
 
-         if (cumple){ console.log(`la fila ${i + 1} cumple`);}
+         if (cumple){ console.log(`la fila ${i + 1} cumple`); alert(`ganan las ${num}`)}
         
         
     }
@@ -72,7 +75,7 @@ this.saludo = function(){console.log(`el nombre del tablero es ${nombre}`);};
             
         }
 
-         if (cumple){ console.log(`la columna ${j + 1} cumple`);}
+         if (cumple){ console.log(`la columna ${j + 1} cumple`);alert(`ganan las ${num}`)}
         
         
     }
@@ -85,7 +88,8 @@ this.checkDiagonal = function checkDiagonal(num){
     if ((board[0][0] == num && board[1][1] == num && board[2][2] == num) 
         || (board[0][2] == num && board[1][1] == num  && board[2][0] == num))
     {
-        console.log("hay ganador")
+        console.log("hay ganador");
+        alert(`ganan las ${num}`);
     }
 }
     this.agregar = function agregar(p,jugador)
@@ -94,9 +98,10 @@ this.checkDiagonal = function checkDiagonal(num){
     }
 
     this.checkWin = function checkWin(num){
-        checkColumns(num);
-        checkDiagonal(num);
-        checkRows(num)
+       
+        this.checkDiagonal(num);
+        this.checkRows(num);
+         this.checkColumns(num);
     }
 }
 ////////////////////////////////////////////////////////////////////////
